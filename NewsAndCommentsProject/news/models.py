@@ -64,7 +64,7 @@ class Comment(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey("Post", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.IntegerField()
+    rating = models.IntegerField(default=0)
 
     def like(self):
         self.rating = self.rating + 1
