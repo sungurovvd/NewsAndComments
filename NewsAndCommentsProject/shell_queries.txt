@@ -1,0 +1,45 @@
+from news.models import *
+u1 = User.objects.create_user('username')
+u2 = User.objects.create_user('username2') 
+a1 = Author.objects.create(user = u1)   
+a2 = Author.objects.create(user = u2) 
+c1 = Category.objects.create(name = 'category1') 
+c2 = Category.objects.create(name = 'category2') 
+c3 = Category.objects.create(name = 'category3') 
+c4 = Category.objects.create(name = 'category4') 
+news1 = Post.objects.create(article = 'news1', text = 'news text', author = a1)
+stat1 = Post.objects.create(article = 'article1', text = 'article text', is_news = False, author = a1)
+stat2 = Post.objects.create(article = 'article2', text = 'article text2', is_news = False, author = a2)
+PostCategory.objects.create(post = news1, category = c1)
+PostCategory.objects.create(post = news1, category = c2) 
+PostCategory.objects.create(post = news1, category = c3) 
+PostCategory.objects.create(post = stat1, category = c3) 
+PostCategory.objects.create(post = stat2, category = c4) 
+com1 = Comment.objects.create(text = 'wow', post = stat1, user = u1)
+com2 = Comment.objects.create(text = 'cool', post = stat1, user = u2) 
+com3 = Comment.objects.create(text = 'comment', post = news1, user = u1) 
+com4 = Comment.objects.create(text = 'like', post = stat2, user = u2) 
+news1.like()
+news1.like()
+stat1.dislike() 
+stat2.like()
+com1.like()
+com2.like()
+com3.like()
+com4.like()
+a1.update_rating()
+a2.update_rating()
+stat1.like()
+a1.update_rating() 
+a2.update_rating() 
+sort = Author.objects.all().order_by('-rating').first()
+sort.user.username  
+sort.rating  
+sort = Post.objects.all().order_by('-rating').first()   
+sort.create_time
+sort.author.user.username
+sort.rating
+sort.article
+sort.preview()
+sort.comment_set.all().values('create_time', 'user', 'rating', 'text') 
+
