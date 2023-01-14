@@ -1,0 +1,44 @@
+{% extends 'flatpages/default.html' %} 
+{% load custom_filters %}
+<!-- Название у нас будет products -->
+{% block title %}
+News
+{% endblock title %}
+ 
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Posts
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contacts/">News</a>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page content-->
+<h1>Все Новости</h1>
+<table>
+           <tr>
+               <td>Дата публикации</td>
+               <td>Название</td>
+               <td>Текст</td>
+           </tr>
+           {% for post in posts %}
+           <tr>
+               {% if post.is_news == True%}
+               <td>{{ post.create_time|date:'M d Y'  }}</td>
+               <td>{{ post.article|censor }}</td>
+               <td>{{ post.preview|censor }}</td>
+               {% endif %}
+           </tr>
+           {% endfor %}
+
+       </table>
+
+{% endblock content %}

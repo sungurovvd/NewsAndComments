@@ -26,6 +26,8 @@ class Author(models.Model):
         self.save()
 
 
+
+
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -39,6 +41,13 @@ class Post(models.Model):
     author = models.ForeignKey("Author", on_delete=models.CASCADE)
     category = models.ManyToManyField("Category", through="PostCategory")
 
+    def __str__(self):
+        art = self.article
+        date = self.create_time
+        prev = self.preview()
+        return f'{date} {art}: {prev}'
+
+
     def like(self):
         self.rating = self.rating + 1
         self.save()
@@ -48,8 +57,8 @@ class Post(models.Model):
         self.save()
 
     def preview(self):
-        if len(self.text)>124:
-            return f'{self.text[:124]}...'
+        if len(self.text)>20:
+            return f'{self.text[:20]}...'
         else:
             return f'{self.text}'
 

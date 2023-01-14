@@ -1,0 +1,41 @@
+{% extends 'flatpages/default.html' %} 
+{% load custom_filters %}
+
+{% block title %}
+Post
+{% endblock title %}
+ 
+
+{% block content %}
+<div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Posts
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contacts/">News</a>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page content-->
+<h1 style="text-align: center;">Все Публикации</h1>
+               <p style="text-align: center;">
+                   Дата публикации: {{ post.create_time|date:'M d Y'  }}</p>
+               <p style="text-align: center;"> Рейтинг {{post.rating}}</p>
+               <p style="text-align: center;"> Автор: {{post.author.user.username}}</p>
+               <p style="text-align: center;">
+                   Название: {{ post.article|censor }}</p>
+               <p style="text-align: center;">{{ post.text|censor }}</p>
+{% endblock content %}
+
+
+    article = models.CharField(max_length=200, unique=True)
+    text = models.TextField()
+    rating = models.IntegerField(default=0)
+    is_news = models.BooleanField(default=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey("Author", on_delete=models.CASCADE)
