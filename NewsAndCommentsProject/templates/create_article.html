@@ -1,0 +1,26 @@
+{% extends 'flatpages/default.html' %} 
+{% load custom_filters %}
+
+{% block title %}
+Создать новость
+{% endblock title %}
+ 
+
+{% block content %}
+<div class="collapse navbar-collapse" id="navbarResponsive">
+
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page content-->
+<form action="" method="post">
+  {% csrf_token %}
+    Создание поста:
+  {{ form.as_p }}
+  <input type="submit" value="Сохранить" />
+
+</form>
+{% endblock content %}
+
+

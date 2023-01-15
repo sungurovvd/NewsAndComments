@@ -33,9 +33,3 @@ Post
 {% endblock content %}
 
 
-    article = models.CharField(max_length=200, unique=True)
-    text = models.TextField()
-    rating = models.IntegerField(default=0)
-    is_news = models.BooleanField(default=True)
-    create_time = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey("Author", on_delete=models.CASCADE)
