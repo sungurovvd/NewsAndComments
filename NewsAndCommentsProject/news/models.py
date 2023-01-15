@@ -54,8 +54,12 @@ class Post(models.Model):
         prev = self.preview()
         return f'{date} {art}: {prev}'
 
+
     def get_absolute_url(self):
-        return reverse('post_detail', args=[str(self.id)])
+        if self.is_news == True:
+            return reverse('news_detail', args=[str(self.id)])
+        else:
+            return reverse('articles_detail', args=[str(self.id)])
 
 
     def like(self):

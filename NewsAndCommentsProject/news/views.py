@@ -1,9 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from .models import *
 from .filters import PostFilter
 from .forms import PostForm
+from django.urls import reverse_lazy
 
 class NewsList(ListView):
     model = Post
@@ -22,7 +23,7 @@ class NewsList(ListView):
         return context
 
 
-class NotNewsList(ListView):
+class ArticleList(ListView):
     model = Post
     ordering = '-create_time'
     template_name = 'not_news.html'
@@ -71,3 +72,20 @@ class NewsUpdate(UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'create_news.html'
+
+
+class ArticleUpdate(UpdateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'create_article.html'
+
+
+class NewsDelete(DeleteView):
+    model = Post
+    template_name = 'delete_news.html'
+    success_url = reverse_lazy('news_list')
+
+class ArticleDelete(DeleteView):
+    model = Post
+    template_name = 'delete_article.html'
+    success_url = reverse_lazy('article_list')
