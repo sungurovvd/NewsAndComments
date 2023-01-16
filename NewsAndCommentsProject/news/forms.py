@@ -6,6 +6,7 @@ class PostForm(forms.ModelForm):
        model = Post
        fields = [
            'article',
+           'is_news',
            'text',
            'author',
            'category'
