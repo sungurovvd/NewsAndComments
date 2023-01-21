@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Author
 
 class PostForm(forms.ModelForm):
    class Meta:
@@ -12,5 +12,11 @@ class PostForm(forms.ModelForm):
            'category'
        ]
 
+# class AuthorForm(forms.ModelForm):
+#    class Meta:
+#        model = Author
+#        fields = [
+#            'user'
+#        ]
 
 
