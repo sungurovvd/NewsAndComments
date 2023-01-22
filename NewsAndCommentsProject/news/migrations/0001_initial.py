@@ -45,14 +45,14 @@ class Migration(migrations.Migration):
             name='PostCategory',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='news.category')),
+                ('category.html', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='news.category.html')),
                 ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='news.post')),
             ],
         ),
         migrations.AddField(
             model_name='post',
-            name='category',
-            field=models.ManyToManyField(through='news.PostCategory', to='news.category'),
+            name='category.html',
+            field=models.ManyToManyField(through='news.PostCategory', to='news.category.html'),
         ),
         migrations.CreateModel(
             name='Comment',

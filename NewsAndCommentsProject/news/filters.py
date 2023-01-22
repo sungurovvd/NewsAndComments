@@ -1,5 +1,5 @@
 from django_filters import FilterSet, BooleanFilter , ModelChoiceFilter, DateFilter
-from .models import Post, Author, User, Category
+from .models import Post, Author, User, Category, Subscribers
 from django import forms
 import  datetime
 
@@ -30,3 +30,18 @@ class PostFilter(FilterSet):
         fields = {
             'article': ['icontains'],
         }
+
+# class ChooseCategoryFilter(FilterSet):
+#
+#     category_name = ModelChoiceFilter(
+#         field_name = 'subscribers_category_name',
+#         label = 'Категория',
+#         queryset= Category.objects.all(),
+#         empty_label = 'Все категории'
+#
+#     )
+#     class Meta:
+#         model = Author
+#         fields={
+#             'name': ['icontains'],
+#         }

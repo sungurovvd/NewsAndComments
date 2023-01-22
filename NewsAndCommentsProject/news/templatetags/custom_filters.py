@@ -1,5 +1,6 @@
 from django import template
 
+
 register = template.Library()
 
 @register.filter()
@@ -13,6 +14,8 @@ def censor(value):
          word = word.replace(word, "*" * len(word))
       answer = answer + ' ' + word
    return answer
+
+
 
 @register.simple_tag(takes_context=True)
 def url_replace(context, **kwargs):

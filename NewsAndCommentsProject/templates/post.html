@@ -22,9 +22,10 @@ Post
         </nav>
 
         <!-- Page content-->
-<h1 style="text-align: center;">Все Публикации</h1>
+<h1 style="text-align: center;">Публикация</h1>
                <p style="text-align: center;">
                    Дата публикации: {{ post.create_time|date:'M d Y'  }}</p>
+               <!-- ока что не работает <p style="text-align: center;"> Категории: {{post.category.name}}</p> -->
                <p style="text-align: center;"> Рейтинг {{post.rating}}</p>
                <p style="text-align: center;"> Автор: {{post.author.user.username}}</p>
                <p style="text-align: center;">
