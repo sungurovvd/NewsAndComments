@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import View,CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import *
 from .filters import PostFilter
+from django.core.mail import EmailMultiAlternatives
 from .forms import PostForm
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -174,7 +176,7 @@ class Subs(View):
         user_from = User.objects.get(username = request.POST['choose_author'])
         author_from = Author.objects.get(user = user_from)
         category_from = Category.objects.get(name =request.POST['choose_category'] )
-
+        last_post = category_from.post_set.all().order_by('-create_time').first()
         subscriber = Subscribers(
             author = author_from,
             category = category_from
@@ -182,13 +184,26 @@ class Subs(View):
         subscriber.save()
         message_to = f'Вы подписались на рассылку по категории {category_from.name}'
 
-        send_mail(
-            subject=f'{category_from.name}',
-            message = message_to,
-            from_email='viktorsung@yandex.ru',
-            recipient_list =[user_from.email]
-
+        html_content = render_to_string(
+            'message.html',
+            {
+                'user': user_from,
+                'category': category_from,
+                'post': last_post
+            }
         )
+
+        msg = EmailMultiAlternatives(
+            subject=f'{category_from.name}',
+            body = message_to,
+            from_email='viktorsung@yandex.ru',
+            to = [user_from.email]
+        )
+
+        msg.attach_alternative(html_content,'text/html')
+        msg.send()
+
+
 
         return redirect('/')
 
