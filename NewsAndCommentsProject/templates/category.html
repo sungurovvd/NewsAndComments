@@ -1,0 +1,44 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Category
+{% endblock title %}
+
+
+{% block content %}
+<div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Posts
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contacts/">News</a>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page content-->
+<h1 style="text-align: center;">Категория:</h1>
+<form action="http://127.0.0.1:8000/posts/subscribers/" method="POST", enctype="multipart/form-data">
+               {% csrf_token %}
+               <p style="text-align: center;">
+                   <select name="choose_author">
+                       {% for author in authors %}
+                       <option> {{ author}}</option>
+                       {% endfor %}
+                   </select>
+                   <select name="choose_category">
+                       {% for category in categories %}
+                       <option> {{ category}}</option>
+                       {% endfor %}
+                   </select>
+
+
+                   </p>
+<input type="submit">
+</form>
+{% endblock content %}
