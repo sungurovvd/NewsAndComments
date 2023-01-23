@@ -202,7 +202,7 @@ class CreateArticles(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
 
                 msg.attach_alternative(html_content, 'text/html')
                 msg.send()
-        return redirect(f'http://127.0.0.1:8000/posts/news/{new_post.id}')
+        return redirect(f'http://127.0.0.1:8000/posts/articles/{new_post.id}')
 
 
 
