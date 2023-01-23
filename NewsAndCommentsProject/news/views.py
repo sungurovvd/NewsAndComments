@@ -54,7 +54,7 @@ class CategoryDetail(DetailView):
 
 class NewsList(ListView):
     model = Post
-    ordering = '-create_time'
+    ordering = 'create_time'
     template_name = 'news.html'
     context_object_name = 'posts'
     paginate_by = 10
@@ -71,7 +71,7 @@ class NewsList(ListView):
 
 class ArticleList(ListView):
     model = Post
-    ordering = '-create_time'
+    ordering = 'create_time'
     template_name = 'not_news.html'
     context_object_name = 'posts'
     paginate_by = 10
@@ -116,7 +116,11 @@ class CreateNews(LoginRequiredMixin,PermissionRequiredMixin,View):
             text = text_from,
             author = author_from
         )
-        new_post.save()
+        try:
+            new_post.save()
+        except:
+            return redirect(f'http://127.0.0.1:8000/posts/news/')
+
 
         for cat in category:
             cat_from = Category.objects.get(name = cat)
@@ -171,7 +175,10 @@ class CreateArticles(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
             author=author_from,
             is_news = False
         )
-        new_post.save()
+        try:
+            new_post.save()
+        except:
+            return redirect(f'http://127.0.0.1:8000/posts/articles/')
 
         for cat in category:
             cat_from = Category.objects.get(name=cat)

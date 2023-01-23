@@ -17,6 +17,7 @@
 <form action="" method="post">
   {% csrf_token %}
    <p> Создание поста:</p>
+    <p><label>В не сможете создать больше 3х новостей/статей за сутки </label></p>
   <p><label>Введите название новости: </label>
   <input type="text" name="article" placeholder="Название"></p>
     <p> <label>Текст: </label>
