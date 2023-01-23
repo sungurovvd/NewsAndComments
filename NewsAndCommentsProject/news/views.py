@@ -9,7 +9,6 @@ from django.core.mail import EmailMultiAlternatives
 from .forms import PostForm
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
@@ -127,27 +126,27 @@ class CreateNews(LoginRequiredMixin,PermissionRequiredMixin,View):
             )
             pc.save()
 
-            subscribers = cat_from.author_set.all()
-            for aut in subscribers:
-
-                html_content = render_to_string(
-                    'message.html',
-                    {
-                        'user': aut,
-                        'category': cat,
-                        'post': new_post
-                    }
-                )
-
-                msg = EmailMultiAlternatives(
-                    subject=f'{cat_from.name}',
-                    body=text_from,
-                    from_email='viktorsung@yandex.ru',
-                    to=[aut.user.email]
-                )
-
-                msg.attach_alternative(html_content, 'text/html')
-                msg.send()
+            # subscribers = cat_from.author_set.all()
+            # for aut in subscribers:
+            #
+            #     html_content = render_to_string(
+            #         'message.html',
+            #         {
+            #             'user': aut,
+            #             'category': cat,
+            #             'post': new_post
+            #         }
+            #     )
+            #
+            #     msg = EmailMultiAlternatives(
+            #         subject=f'{cat_from.name}',
+            #         body=text_from,
+            #         from_email='viktorsung@yandex.ru',
+            #         to=[aut.user.email]
+            #     )
+            #
+            #     msg.attach_alternative(html_content, 'text/html')
+            #     msg.send()
         return redirect(f'http://127.0.0.1:8000/posts/news/{new_post.id}')
 
 
@@ -182,26 +181,26 @@ class CreateArticles(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
             )
             pc.save()
 
-            subscribers = cat_from.author_set.all()
-            for aut in subscribers:
-                html_content = render_to_string(
-                    'message.html',
-                    {
-                        'user': aut,
-                        'category': cat,
-                        'post': new_post
-                    }
-                )
-
-                msg = EmailMultiAlternatives(
-                    subject=f'{cat_from.name}',
-                    body=text_from,
-                    from_email='viktorsung@yandex.ru',
-                    to=[aut.user.email]
-                )
-
-                msg.attach_alternative(html_content, 'text/html')
-                msg.send()
+            # subscribers = cat_from.author_set.all()
+            # for aut in subscribers:
+            #     html_content = render_to_string(
+            #         'message.html',
+            #         {
+            #             'user': aut,
+            #             'category': cat,
+            #             'post': new_post
+            #         }
+            #     )
+            #
+            #     msg = EmailMultiAlternatives(
+            #         subject=f'{cat_from.name}',
+            #         body=text_from,
+            #         from_email='viktorsung@yandex.ru',
+            #         to=[aut.user.email]
+            #     )
+            #
+            #     msg.attach_alternative(html_content, 'text/html')
+            #     msg.send()
         return redirect(f'http://127.0.0.1:8000/posts/articles/{new_post.id}')
 
 

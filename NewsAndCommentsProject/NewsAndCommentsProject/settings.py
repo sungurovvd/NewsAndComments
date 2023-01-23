@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'news',
+    'news.apps.NewsConfig',
     'django.contrib.sites',
     'django.contrib.flatpages',
     "django_filters",
@@ -176,3 +176,5 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'viktorsung'
 EMAIL_HOST_PASSWORD = 'PasswordForDjango'
 EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = 'victorsung@yandex.ru'
