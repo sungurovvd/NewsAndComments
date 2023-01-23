@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>{{ user.username }} Вы подписались на рассылку по категории {{category.name}}!</h2>
+    <h2>{{ user.user.username }} Вы подписались на рассылку по категории {{category}}!</h2>
     <p> Последняя статья в данной категории: {{ post.text|truncatechars:50 }} </p>
 </body>
 </html>

@@ -16,9 +16,19 @@
         <!-- Page content-->
 <form action="" method="post">
   {% csrf_token %}
-    Создание поста:
-  {{ form.as_p }}
-  <input type="submit" value="Сохранить" />
+   <p> Создание поста:</p>
+  <p><label>Введите название новости: </label>
+  <input type="text" name="article" placeholder="Название"></p>
+    <p> <label>Текст: </label>
+    <textarea name="text">Введите текст новости </textarea></p>
+    <p> <label>Категория: </label>
+    <select size="3" multiple name="category">
+        {% for category in categories %}
+        <option> {{ category}}</option>
+        {% endfor %}
+    </select></p>
+    <input type="hidden" name="user" value="{{request.user.username}}">
+  <p> <input type="submit" value="Сохранить" /></p>
 
 </form>
 {% endblock content %}

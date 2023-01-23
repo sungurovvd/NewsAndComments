@@ -114,11 +114,130 @@ class PostDetail(DetailView):
 #             return HttpResponseRedirect('/articles/')
 #     return render(request, 'create_article.html', {'form': form})
 
-class CreateNews(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
+# class CreateNews(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
+#     permission_required = ('news.add_post')
+#     form_class = PostForm
+#     model = Post
+#     template_name = 'create_news.html'
+
+class CreateNews(LoginRequiredMixin,PermissionRequiredMixin,View):
     permission_required = ('news.add_post')
-    form_class = PostForm
-    model = Post
-    template_name = 'create_news.html'
+
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        to_html = {'categories': categories}
+        return render(request, 'create_news.html', context=to_html)
+
+    def post(self, request, *args, **kwargs):
+        user_from = request.POST['user']
+        user_from = User.objects.get(username= f'{user_from}')
+        author_from = Author.objects.get(user=user_from)
+        text_from = request.POST['text']
+        name = request.POST['article']
+        category = request.POST.getlist('category', ['category1'])
+        new_post = Post(
+            article = name,
+            text = text_from,
+            author = author_from
+        )
+        new_post.save()
+
+
+        for cat in category:
+            cat_from = Category.objects.get(name = cat)
+            pc = PostCategory(
+                post = new_post,
+                category = cat_from
+            )
+            pc.save()
+
+            subscribers = cat_from.author_set.all()
+            for aut in subscribers:
+
+                html_content = render_to_string(
+                    'message.html',
+                    {
+                        'user': aut,
+                        'category': cat,
+                        'post': new_post
+                    }
+                )
+
+                msg = EmailMultiAlternatives(
+                    subject=f'{cat_from.name}',
+                    body=text_from,
+                    from_email='viktorsung@yandex.ru',
+                    to=[aut.user.email]
+                )
+
+                msg.attach_alternative(html_content, 'text/html')
+                msg.send()
+        return redirect(f'http://127.0.0.1:8000/posts/news/{new_post.id}')
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # ser_from = User.objects.get(username=request.POST['choose_author'])
+        # author_from = Author.objects.get(user=user_from)
+        # category_from = Category.objects.get(name=request.POST['choose_category'])
+        # last_post = category_from.post_set.all().order_by('-create_time').first()
+        # subscriber = Subscribers(
+        #     author=author_from,
+        #     category=category_from
+        # )
+        # subscriber.save()
+        # message_to = f'Вы подписались на рассылку по категории {category_from.name}'
+        #
+        # html_content = render_to_string(
+        #     'message.html',
+        #     {
+        #         'user': user_from,
+        #         'category': category_from,
+        #         'post': last_post
+        #     }
+        # )
+        #
+        # msg = EmailMultiAlternatives(
+        #     subject=f'{category_from.name}',
+        #     body=message_to,
+        #     from_email='viktorsung@yandex.ru',
+        #     to=[user_from.email]
+        # )
+        #
+        # msg.attach_alternative(html_content, 'text/html')
+        # msg.send()
+        #
+        # return redirect('/')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class CreateArticles(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
     permission_required = ('news.add_post')
