@@ -29,22 +29,22 @@ class PostList(ListView):
         return context
 
 
-class CategoryList(LoginRequiredMixin, ListView):
-    permission_required = ('news.add_post')
-    model = Category
-    ordering = 'id'
-    template_name = 'categories.html'
-    context_object_name = 'categories'
-    paginate_by = 10
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        self.filterset = CategoryFilter(self.request.GET, queryset)
-        return self.filterset.qs
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['filterset'] = self.filterset
-        return context
+# class CategoryList(LoginRequiredMixin, ListView):
+#     permission_required = ('news.add_post')
+#     model = Category
+#     ordering = 'id'
+#     template_name = 'categories.html'
+#     context_object_name = 'categories'
+#     paginate_by = 10
+#
+#     def get_queryset(self):
+#         queryset = super().get_queryset()
+#         self.filterset = CategoryFilter(self.request.GET, queryset)
+#         return self.filterset.qs
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['filterset'] = self.filterset
+#         return context
 
 class CategoryDetail(DetailView):
     model = Category
@@ -91,11 +91,7 @@ class PostDetail(DetailView):
     template_name = 'post.html'
     context_object_name = 'post'
 
-# class CreateNews(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
-#     permission_required = ('news.add_post')
-#     form_class = PostForm
-#     model = Post
-#     template_name = 'create_news.html'
+
 class CreateNews(LoginRequiredMixin,PermissionRequiredMixin,View):
     permission_required = ('news.add_post')
 
@@ -130,27 +126,6 @@ class CreateNews(LoginRequiredMixin,PermissionRequiredMixin,View):
             )
             pc.save()
 
-            # subscribers = cat_from.author_set.all()
-            # for aut in subscribers:
-            #
-            #     html_content = render_to_string(
-            #         'message.html',
-            #         {
-            #             'user': aut,
-            #             'category': cat,
-            #             'post': new_post
-            #         }
-            #     )
-            #
-            #     msg = EmailMultiAlternatives(
-            #         subject=f'{cat_from.name}',
-            #         body=text_from,
-            #         from_email='viktorsung@yandex.ru',
-            #         to=[aut.user.email]
-            #     )
-            #
-            #     msg.attach_alternative(html_content, 'text/html')
-            #     msg.send()
         return redirect(f'http://127.0.0.1:8000/posts/news/{new_post.id}')
 
 
@@ -188,26 +163,6 @@ class CreateArticles(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
             )
             pc.save()
 
-            # subscribers = cat_from.author_set.all()
-            # for aut in subscribers:
-            #     html_content = render_to_string(
-            #         'message.html',
-            #         {
-            #             'user': aut,
-            #             'category': cat,
-            #             'post': new_post
-            #         }
-            #     )
-            #
-            #     msg = EmailMultiAlternatives(
-            #         subject=f'{cat_from.name}',
-            #         body=text_from,
-            #         from_email='viktorsung@yandex.ru',
-            #         to=[aut.user.email]
-            #     )
-            #
-            #     msg.attach_alternative(html_content, 'text/html')
-            #     msg.send()
         return redirect(f'http://127.0.0.1:8000/posts/articles/{new_post.id}')
 
 
@@ -239,13 +194,13 @@ class ArticleDelete(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
     success_url = reverse_lazy('article_list')
 
 
-@login_required
-def subs(request):
-    user_req = request.POST['user']
-    catetory_req = request.category
-    Subscribers.objects.create(author = user_req, category = catetory_req)
-    Subscribers.objects.create(author=user_req, category=catetory_req)
-    return redirect('/')
+# @login_required
+# def subs(request):
+#     user_req = request.POST['user']
+#     catetory_req = request.category
+#     Subscribers.objects.create(author = user_req, category = catetory_req)
+#     Subscribers.objects.create(author=user_req, category=catetory_req)
+#     return redirect('/')
 
 class Subs(View):
     def get(self, request, *args, **kwargs):

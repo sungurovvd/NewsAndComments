@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     "django_filters",
+    'django_apscheduler',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -178,3 +179,8 @@ EMAIL_HOST_PASSWORD = 'PasswordForDjango'
 EMAIL_USE_SSL = True
 
 DEFAULT_FROM_EMAIL = 'victorsung@yandex.ru'
+
+#формат даты
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+#скип зпдпчи если не сделалась за 25 сек
+APSCHEDULER_RUN_NOW_TIMEOUT = 25

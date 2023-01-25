@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Subs, CategoryDetail, CategoryList, NewsList, PostList, NewsDelete, ArticleDelete, PostDetail,CreateNews, CreateArticles , ArticleList, NewsUpdate, ArticleUpdate #create_news,create_article
+from .views import Subs, CategoryDetail, NewsList, PostList, NewsDelete, ArticleDelete, PostDetail,CreateNews, CreateArticles , ArticleList, NewsUpdate, ArticleUpdate #create_news,create_article
 
 
 urlpatterns = [
