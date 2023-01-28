@@ -2,7 +2,11 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from .models import Subscribers
 from datetime import datetime
+from celery import shared_task
+import time
 
+
+@shared_task
 def send_week_mails():
     subscribers = Subscribers.objects.all()
     for subs in subscribers:
@@ -36,3 +40,32 @@ def send_week_mails():
 
         msg.attach_alternative(html_content, 'text/html')
         msg.send()
+
+
+@shared_task
+def hello():
+    # >celery -A NewsAndCommentsProject worker -l info --pool=solo
+    #celery - A NewsAndCommentsProject beat - l info
+
+    html_content = render_to_string(
+        'week_message.html',
+        {
+            'username': '',
+            'category': '',
+            'count': '',
+            'names': ''
+        }
+    )
+
+    msg = EmailMultiAlternatives(
+        subject=f'',
+        body='name_of_new_posts',
+        from_email='viktorsung@yandex.ru',
+        to=['sungurovvictor@gmail.com']
+    )
+
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
+    print("Hello, world!")
+
+

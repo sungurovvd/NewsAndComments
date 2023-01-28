@@ -10,7 +10,7 @@ from .forms import PostForm
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
+from .tasks import hello
 
 class PostList(ListView):
     model = Post
@@ -98,6 +98,7 @@ class CreateNews(LoginRequiredMixin,PermissionRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
         to_html = {'categories': categories}
+        hello.delay()
         return render(request, 'create_news.html', context=to_html)
 
     def post(self, request, *args, **kwargs):

@@ -182,5 +182,13 @@ DEFAULT_FROM_EMAIL = 'victorsung@yandex.ru'
 
 #формат даты
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
-#скип зпдпчи если не сделалась за 25 сек
-APSCHEDULER_RUN_NOW_TIMEOUT = 25
+#скип зпдпчи если не сделалась за 60 сек
+APSCHEDULER_RUN_NOW_TIMEOUT = 60
+
+# redis
+
+CELERY_BROKER_URL = 'redis://default:PwtPgYUEAWvmLd14AlpCOzLlMjR4xp9t@redis-14993.c275.us-east-1-4.ec2.cloud.redislabs.com:14993'
+CELERY_RESULT_BACKEND = 'redis://default:PwtPgYUEAWvmLd14AlpCOzLlMjR4xp9t@redis-14993.c275.us-east-1-4.ec2.cloud.redislabs.com:14993'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
