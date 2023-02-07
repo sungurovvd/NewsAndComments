@@ -12,6 +12,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .tasks import hello
 
+
+
 class PostList(ListView):
     model = Post
     ordering = '-create_time'

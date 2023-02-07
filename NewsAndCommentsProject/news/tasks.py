@@ -44,7 +44,7 @@ def send_week_mails():
 
 @shared_task
 def hello():
-    # >celery -A NewsAndCommentsProject worker -l info --pool=solo
+    #celery -A NewsAndCommentsProject worker -l info --pool=solo
     #celery - A NewsAndCommentsProject beat - l info
 
     html_content = render_to_string(
